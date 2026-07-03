@@ -7,25 +7,44 @@ const JUMP_VELOCITY = -400.0
 
 
 func _physics_process(delta):
-	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
+
 	if direction:
 		velocity.x = direction * SPEED
-		animated_sprite_2d.play("Run")
+		animated_sprite_2d.flip_h = direction > 0
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	# الأنيميشن
+	if not is_on_floor():
+		if velocity.y < 0:
+			animated_sprite_2d.play("Jump")
+		else:
+			animated_sprite_2d.play("Fall")
+	elif direction:
+		animated_sprite_2d.play("Run")
+	else:
 		animated_sprite_2d.play("Idle")
 
 	move_and_slide()
 
 func _ready():
 	animated_sprite_2d.play("Idle")
+
+
+func _on_area_2d_body_entered(body):
+	if body.is_in_group("Boxes"):
+		body.collision_layer = 1
+		body.collision_mask = 1
+
+
+func _on_area_2d_body_exited(body):
+	if body.is_in_group("Boxes"):
+		body.collision_layer = 2
+		body.collision_mask = 2
