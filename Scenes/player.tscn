@@ -172,7 +172,7 @@ size = Vector2(10, 7)
 collision_layer = 3
 script = ExtResource("1_cvnsp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Player"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.5, 5)
 shape = SubResource("RectangleShape2D_vgqql")
 
