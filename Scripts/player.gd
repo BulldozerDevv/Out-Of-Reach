@@ -1,9 +1,10 @@
 extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
-const AIR_DECEL = 300.0  # سرعة التخفيض بالهواء (جربها وغيرها حسب الإحساس اللي تبيه)
+const AIR_DECEL = 300.0
+const PUSH_SPEED = 200.0
 var OnPlatVelo = Vector2(0,0)
-var air_base_velocity_x = 0.0  # سرعة المنصة وقت آخر لحظة كنت فيها على الأرض
+var air_base_velocity_x = 0.0
 @onready var animated_sprite_2d = $AnimatedSprite2D
 
 func _physics_process(delta):
@@ -32,16 +33,29 @@ func _physics_process(delta):
 		animated_sprite_2d.play("Idle")
 	move_and_slide()
 	OnPlatVelo = get_platform_velocity()
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider is RigidBody2D and collider.is_in_group("Boxes"):
+			var normal = collision.get_normal()
+			if abs(normal.x) > 0.5:
+				collider.linear_velocity.x = velocity.x
+			# تحقق: لو الصندوق فعليًا ما يقدر يتحرك (تصادم مع جدار)
+				if collider.get_contact_count() > 0:
+					for j in collider.get_contact_count():
+						pass
+
 
 func _ready():
 	animated_sprite_2d.play("Idle")
+	process_physics_priority = -10
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("Boxes"):
-		body.collision_layer = 1
-		body.collision_mask = 1
+		pass#body.collision_layer = 1
+		#body.collision_mask = 1
 
 func _on_area_2d_body_exited(body):
 	if body.is_in_group("Boxes"):
-		body.collision_layer = 2
-		body.collision_mask = 2
+		pass#body.collision_layer = 2
+		#body.collision_mask = 2

@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://doaivc5tublt5"]
+[gd_scene load_steps=4 format=3 uid="uid://doaivc5tublt5"]
 
 [ext_resource type="Texture2D" uid="uid://cljqd0hg5cwu4" path="res://Sprites/08-Box/Idle.png" id="1_xkb4e"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ego7h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ego7h"]
 size = Vector2(21, 16)
@@ -8,11 +10,27 @@ size = Vector2(21, 16)
 [node name="Box" type="RigidBody2D" groups=["Boxes"]]
 collision_layer = 2
 collision_mask = 2
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_ego7h")
+lock_rotation = true
+continuous_cd = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_ego7h")
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector/CollisionShape2D"]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_ego7h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("1_xkb4e")
+
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
