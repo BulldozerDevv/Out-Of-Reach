@@ -4,6 +4,7 @@ const JUMP_VELOCITY = -400.0
 const AIR_DECEL = 300.0  # سرعة التخفيض بالهواء (جربها وغيرها حسب الإحساس اللي تبيه)
 var OnPlatVelo = Vector2(0,0)
 var air_base_velocity_x = 0.0  # سرعة المنصة وقت آخر لحظة كنت فيها على الأرض
+var pushforce = 80.0
 @onready var animated_sprite_2d = $AnimatedSprite2D
 
 func _physics_process(delta):
@@ -32,6 +33,11 @@ func _physics_process(delta):
 		animated_sprite_2d.play("Idle")
 	move_and_slide()
 	OnPlatVelo = get_platform_velocity()
+	
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is RigidBody2D:
+			c.get_collider().apply_central_impulse(-c.get_normal()*pushforce)
 
 func _ready():
 	animated_sprite_2d.play("Idle")

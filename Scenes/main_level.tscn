@@ -1,11 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://dog5f0oyu6dge"]
+[gd_scene load_steps=11 format=3 uid="uid://dog5f0oyu6dge"]
 
 [ext_resource type="PackedScene" uid="uid://cv1qlxq21q041" path="res://Scenes/player.tscn" id="2_ikcpc"]
 [ext_resource type="PackedScene" uid="uid://doaivc5tublt5" path="res://Scenes/box.tscn" id="3_5erdv"]
 [ext_resource type="Texture2D" uid="uid://csvaqn3r5kc8v" path="res://Sprites/14-TileSets/Terrain (32x32).png" id="4_a2ia3"]
 [ext_resource type="Texture2D" uid="uid://gewa1oiwlmuv" path="res://Sprites/14-TileSets/Decorations (32x32).png" id="5_236hc"]
 [ext_resource type="PackedScene" uid="uid://b5614fhgoybvr" path="res://Scenes/key.tscn" id="5_a2ia3"]
-[ext_resource type="Texture2D" uid="uid://dumv7ut8ojxsg" path="res://Sprites/Platform.png" id="6_236hc"]
+[ext_resource type="PackedScene" uid="uid://bd41uvo1k3hmu" path="res://Scenes/movingplatform.tscn" id="7_lwkuy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lwkuy"]
 texture = ExtResource("4_a2ia3")
@@ -529,46 +529,11 @@ physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_lwkuy")
 sources/1 = SubResource("TileSetAtlasSource_tqiex")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_236hc"]
-size = Vector2(85.3333, 4)
-
-[sub_resource type="Animation" id="Animation_lwkuy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_236hc"]
-resource_name = "moving"
-length = 6.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3, 6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(119, 0), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tqiex"]
+[sub_resource type="Curve2D" id="Curve2D_lwkuy"]
 _data = {
-&"RESET": SubResource("Animation_lwkuy"),
-&"moving": SubResource("Animation_236hc")
+"points": PackedVector2Array(0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 200, 0)
 }
+point_count = 2
 
 [node name="Main Level" type="Node2D"]
 
@@ -580,6 +545,8 @@ layer_0/tile_data = PackedInt32Array(1572877, 983040, 4, 1310733, 720896, 3, 137
 
 [node name="Player" parent="." instance=ExtResource("2_ikcpc")]
 position = Vector2(376, 344)
+collision_layer = 2
+collision_mask = 7
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(3, 5)
@@ -591,25 +558,14 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.175
 
 [node name="Box" parent="." instance=ExtResource("3_5erdv")]
-position = Vector2(546, 376)
+position = Vector2(288, 352)
+collision_layer = 4
+collision_mask = 7
 
 [node name="Key" parent="." instance=ExtResource("5_a2ia3")]
 position = Vector2(576, 368)
 
-[node name="MoveablePlatform" type="AnimatableBody2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="MoveablePlatform"]
-texture_filter = 1
-position = Vector2(472, 344)
-texture = ExtResource("6_236hc")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveablePlatform"]
-position = Vector2(472, 342.5)
-scale = Vector2(0.75, 0.75)
-shape = SubResource("RectangleShape2D_236hc")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MoveablePlatform"]
-libraries = {
-&"": SubResource("AnimationLibrary_tqiex")
-}
-autoplay = "moving"
+[node name="MovingPlatform" parent="." instance=ExtResource("7_lwkuy")]
+position = Vector2(448, 344)
+curve = SubResource("Curve2D_lwkuy")
+loop = false
