@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwymo1yx5e2sn"]
+
+[ext_resource type="Script" uid="uid://cfkvnd5a54vdt" path="res://Scripts/mainmenu.gd" id="1_pposm"]
+[ext_resource type="Texture2D" uid="uid://7a0ae808vukx" path="res://Screenshot 2026-07-06 012856.png" id="2_web8u"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pposm")
+
+[node name="Screenshot2026-07-06012856" type="Sprite2D" parent="."]
+position = Vector2(655, 372)
+scale = Vector2(1.08, 1.08)
+texture = ExtResource("2_web8u")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 96.0
+offset_right = 934.0
+offset_bottom = 228.0
+theme_override_colors/font_color = Color(0.247059, 0.219608, 0.317647, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 25
+theme_override_font_sizes/font_size = 96
+text = "Out of Reach"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 288.0
+offset_top = 272.0
+offset_right = -288.0
+offset_bottom = -216.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 131
+text = "Play"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

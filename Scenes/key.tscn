@@ -1,6 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5614fhgoybvr"]
+[gd_scene load_steps=11 format=3 uid="uid://b5614fhgoybvr"]
 
+[ext_resource type="Script" uid="uid://snm8c1qrlabp" path="res://Scripts/key.gd" id="1_udxw8"]
 [ext_resource type="Texture2D" uid="uid://cehhybi61eeq4" path="res://Sprites/key.png" id="1_ut0wq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ut0wq"]
+size = Vector2(22, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_udxw8"]
 atlas = ExtResource("1_ut0wq")
@@ -48,14 +52,27 @@ animations = [{
 "texture": SubResource("AtlasTexture_20akx")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Idle",
 "speed": 5.0
 }]
 
-[node name="Key" type="AnimatedSprite2D"]
+[node name="Key" type="Area2D"]
 texture_filter = 1
-position = Vector2(-1.19209e-07, 0)
-scale = Vector2(0.875, 0.875)
+script = ExtResource("1_udxw8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_ut0wq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.85, 0.85)
 sprite_frames = SubResource("SpriteFrames_1fooj")
-autoplay = "default"
-frame_progress = 0.504872
+animation = &"Idle"
+autoplay = "Idle"
+frame = 4
+frame_progress = 0.10659
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

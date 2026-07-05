@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvl1xnw8xacbg"]
+
+[ext_resource type="Script" uid="uid://v764pl8nhgye" path="res://Scripts/gravityfield.gd" id="1_maxe4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_88cin"]
+size = Vector2(134, 256)
+
+[node name="GravityField" type="Area2D"]
+script = ExtResource("1_maxe4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_88cin")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, 128)
+amount = 30
+lifetime = 0.75
+speed_scale = 0.1
+emission_shape = 3
+emission_rect_extents = Vector2(60.375, 1)
+gravity = Vector2(0, -980)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -7,13 +7,17 @@ var OnPlatVelo = Vector2(0,0)
 # Platformer's velocity at the last time the player was in the ground:
 var air_base_velocity_x = 0.0
 var pushforce = 80.0
+var haskey = false
 @onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var collision_shape_2d = $CollisionShape2D
+
 
 func _physics_process(delta):
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * delta  * -up_direction
+
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY * -up_direction.y
 		velocity.x = OnPlatVelo.x
 		air_base_velocity_x = OnPlatVelo.x
 	var direction = Input.get_axis("left", "right")
@@ -40,6 +44,16 @@ func _physics_process(delta):
 		var c = get_slide_collision(i)
 		if c.get_collider() is RigidBody2D:
 			c.get_collider().apply_central_impulse(-c.get_normal() * pushforce)
+
+func reverse_gravity(boolean: bool):
+	animated_sprite_2d.flip_v = boolean
+	
+	if boolean:
+		up_direction = Vector2.DOWN
+		collision_shape_2d.position = Vector2(0,-5)
+	else:
+		up_direction = Vector2.UP
+		collision_shape_2d.position = Vector2(0,5)
 
 func _ready():
 	animated_sprite_2d.play("Idle")
