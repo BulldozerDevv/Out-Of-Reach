@@ -559,6 +559,7 @@ loop = false
 
 [node name="DisappearingPlatform" parent="." instance=ExtResource("7_tqiex")]
 position = Vector2(344, 336)
+new_position = Vector2(400, 336)
 
 [node name="player" parent="." instance=ExtResource("2_ikcpc")]
 position = Vector2(408, 336)
