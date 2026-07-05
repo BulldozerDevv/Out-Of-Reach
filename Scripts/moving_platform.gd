@@ -2,8 +2,8 @@ extends Path2D
 
 
 @export var loop: bool = true
-@export var speed: int = 2.0
-@export var speedscale: int = 1.0
+@export var speed: float = 2.0
+@export var speedscale: float = 1.0
 @onready var path = $PathFollow2D
 @onready var anim = $AnimationPlayer
 
@@ -16,5 +16,5 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	path.progress += speed
