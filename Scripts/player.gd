@@ -10,6 +10,7 @@ var pushforce = 80.0
 var haskey = false
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var dragon_studio_cartoon_jump_463196 = $"../Dragon-studio-cartoon-jump-463196"
 
 
 func _physics_process(delta):
@@ -20,6 +21,8 @@ func _physics_process(delta):
 		velocity.y = JUMP_VELOCITY * -up_direction.y
 		velocity.x = OnPlatVelo.x
 		air_base_velocity_x = OnPlatVelo.x
+		$"../Dragon-studio-cartoon-jump-463196".play()
+		
 	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * SPEED
