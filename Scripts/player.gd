@@ -8,12 +8,15 @@ var OnPlatVelo = Vector2(0,0)
 var air_base_velocity_x = 0.0
 var pushforce = 80.0
 var haskey = false
+var frozen = false
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var dragon_studio_cartoon_jump_463196 = $"../Dragon-studio-cartoon-jump-463196"
 
 
 func _physics_process(delta):
+	if frozen:
+		return
 	if not is_on_floor():
 		velocity += get_gravity() * delta  * -up_direction
 

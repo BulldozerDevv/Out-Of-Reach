@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dog5f0oyu6dge"]
+[gd_scene load_steps=27 format=3 uid="uid://dog5f0oyu6dge"]
 
 [ext_resource type="Script" uid="uid://dqk05bpslayik" path="res://Scripts/main_level.gd" id="1_ha3dl"]
 [ext_resource type="PackedScene" uid="uid://cv1qlxq21q041" path="res://Scenes/player.tscn" id="2_ikcpc"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://bv4h6sww3dmet" path="res://dragon-studio-cartoon-jump-463196.mp3" id="8_ha3dl"]
 [ext_resource type="PackedScene" uid="uid://bvl1xnw8xacbg" path="res://Scenes/gravityfield.tscn" id="8_tqiex"]
 [ext_resource type="AudioStream" uid="uid://b05gmv5albg74" path="res://edimar_ramide-death2-340040.mp3" id="9_ha3dl"]
+[ext_resource type="Texture2D" uid="uid://b27wnaq3b2its" path="res://Sprites/back_grey.png" id="10_f3gli"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lwkuy"]
 texture = ExtResource("4_a2ia3")
@@ -541,6 +542,28 @@ point_count = 3
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ha3dl"]
 size = Vector2(2584, 616)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2jcip"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6l6h0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o18aq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hd7sb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vthg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unus1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vgie2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_and0o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jf8f8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qx7ya"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d4dc6"]
+
 [node name="Main Level" type="Node2D"]
 script = ExtResource("1_ha3dl")
 
@@ -575,19 +598,14 @@ position = Vector2(272, 368)
 zoom = Vector2(4, 4)
 process_callback = 0
 limit_left = 190
+limit_top = 90
+limit_right = 1632
 limit_bottom = 410
 position_smoothing_enabled = true
 position_smoothing_speed = 10.175
 
 [node name="GravityField" parent="." instance=ExtResource("8_tqiex")]
 position = Vector2(696, 256)
-
-[node name="Button" type="Button" parent="."]
-offset_left = 1467.0
-offset_top = 346.0
-offset_right = 1512.0
-offset_bottom = 377.0
-text = "back"
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -605,6 +623,28 @@ volume_db = 15.167
 
 [node name="Timer" type="Timer" parent="."]
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+texture_filter = 1
+offset_left = 21.0
+offset_top = 16.0
+offset_right = 37.0
+offset_bottom = 32.0
+scale = Vector2(4, 4)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2jcip")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_6l6h0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_o18aq")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hd7sb")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5vthg")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_unus1")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vgie2")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_and0o")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_jf8f8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_qx7ya")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d4dc6")
+icon = ExtResource("10_f3gli")
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
