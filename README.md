@@ -55,7 +55,7 @@ Feel free to fork the project, modify it, and build upon it!
 
 ---
 
-## Important Notice
+## Important Notice 🚨⚠️
 
 I kindly ask everyone who uses, modifies, or contributes to this project to avoid adding anything that goes against Islamic Sharia, including (but not limited to):
 
